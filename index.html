@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiddosheet — Worksheet Seru untuk Si Kecil</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sun: #FFD93D;
+    --coral: #FF6B6B;
+    --mint: #6BCB77;
+    --sky: #4D96FF;
+    --lavender: #C77DFF;
+    --peach: #FFB347;
+    --cream: #FFF9F0;
+    --dark: #2D2D2D;
+    --mid: #555;
+    --light-border: #F0E8D8;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #fff;
+    border-bottom: 3px solid var(--sun);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+    box-shadow: 0 4px 0 rgba(255,217,61,0.15);
+  }
+  .logo {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.7rem; font-weight: 800;
+    color: var(--dark);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .logo span { color: var(--coral); }
+  .logo-icon { font-size: 1.8rem; }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a {
+    font-weight: 700; font-size: .95rem; color: var(--mid);
+    text-decoration: none; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--coral); }
+  .cart-btn {
+    background: var(--coral); color: #fff;
+    border: none; border-radius: 50px;
+    padding: 9px 20px; font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: .9rem; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: transform .15s, background .2s;
+    position: relative;
+  }
+  .cart-btn:hover { background: #e85555; transform: scale(1.05); }
+  .cart-count {
+    background: var(--sun); color: var(--dark);
+    border-radius: 50%; width: 20px; height: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .75rem; font-weight: 900;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #FFF4CC 0%, #FFE8E8 50%, #E8F4FF 100%);
+    padding: 70px 5% 60px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 320px; height: 320px; border-radius: 50%;
+    background: rgba(255,217,61,0.25);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -60px; left: 30%;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: rgba(107,203,119,0.2);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--coral); color: #fff;
+    border-radius: 50px; padding: 5px 16px;
+    font-size: .82rem; font-weight: 800;
+    letter-spacing: .05em; text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800;
+    line-height: 1.15; margin-bottom: 18px;
+  }
+  .hero h1 em { color: var(--coral); font-style: normal; }
+  .hero p { font-size: 1.05rem; color: var(--mid); line-height: 1.7; max-width: 420px; }
+  .hero-btns { display: flex; gap: 14px; margin-top: 28px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--coral); color: #fff;
+    border: none; border-radius: 50px;
+    padding: 14px 30px; font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 1rem; cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 6px 0 #c94c4c; transition: transform .15s, box-shadow .15s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #c94c4c; }
+  .btn-primary:active { transform: translateY(2px); box-shadow: 0 2px 0 #c94c4c; }
+  .btn-secondary {
+    background: #fff; color: var(--dark);
+    border: 3px solid var(--dark); border-radius: 50px;
+    padding: 12px 26px; font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 1rem; cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: background .2s;
+  }
+  .btn-secondary:hover { background: #f5f5f5; }
+  .hero-visual {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    position: relative; z-index: 1;
+  }
+  .hero-card {
+    background: #fff; border-radius: 20px;
+    padding: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.09);
+    display: flex; flex-direction: column; gap: 10px;
+    border: 2px solid transparent;
+    animation: float 4s ease-in-out infinite;
+  }
+  .hero-card:nth-child(2) { animation-delay: .8s; margin-top: 24px; }
+  .hero-card:nth-child(3) { animation-delay: 1.6s; margin-top: -12px; }
+  .hero-card:nth-child(4) { animation-delay: 2.4s; margin-top: 12px; }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .hero-card-emoji { font-size: 2rem; }
+  .hero-card-title { font-weight: 800; font-size: .88rem; }
+  .hero-card-sub { font-size: .75rem; color: var(--mid); }
+  .hero-card-badge {
+    display: inline-block; border-radius: 50px;
+    padding: 3px 10px; font-size: .72rem; font-weight: 700; color: #fff;
+  }
+
+  /* STATS */
+  .stats {
+    background: var(--dark);
+    padding: 28px 5%;
+    display: flex; justify-content: center; gap: 60px; flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2rem; font-weight: 800; color: var(--sun);
+  }
+  .stat-label { font-size: .85rem; color: #aaa; margin-top: 2px; }
+
+  /* CATEGORIES */
+  .section { padding: 60px 5%; }
+  .section-header { text-align: center; margin-bottom: 40px; }
+  .section-tag {
+    display: inline-block;
+    font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--lavender); margin-bottom: 10px;
+  }
+  .section-header h2 {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800;
+  }
+  .category-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px;
+  }
+  .cat-card {
+    background: #fff; border-radius: 20px;
+    padding: 24px 12px; text-align: center;
+    cursor: pointer; border: 3px solid transparent;
+    transition: all .2s; text-decoration: none; color: var(--dark);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+  .cat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0,0,0,0.12); }
+  .cat-card.active { border-color: var(--coral); }
+  .cat-emoji { font-size: 2.2rem; display: block; margin-bottom: 10px; }
+  .cat-name { font-weight: 800; font-size: .88rem; }
+  .cat-count { font-size: .75rem; color: var(--mid); margin-top: 4px; }
+
+  /* PRODUCTS */
+  .products { padding: 0 5% 60px; }
+  .products-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 28px; flex-wrap: wrap; gap: 12px;
+  }
+  .products-header h2 {
+    font-family: 'Baloo 2', cursive; font-size: 1.8rem; font-weight: 800;
+  }
+  .filter-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .filter-pill {
+    background: #fff; border: 2px solid var(--light-border);
+    border-radius: 50px; padding: 6px 16px;
+    font-family: 'Nunito', sans-serif; font-size: .85rem; font-weight: 700;
+    cursor: pointer; transition: all .2s; color: var(--mid);
+  }
+  .filter-pill:hover, .filter-pill.active {
+    background: var(--coral); border-color: var(--coral); color: #fff;
+  }
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px;
+  }
+  .product-card {
+    background: #fff; border-radius: 24px;
+    overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    transition: transform .2s, box-shadow .2s;
+    cursor: pointer; border: 2px solid transparent;
+  }
+  .product-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.13); }
+  .product-thumb {
+    height: 170px; display: flex; align-items: center; justify-content: center;
+    font-size: 4rem; position: relative; overflow: hidden;
+  }
+  .product-badge {
+    position: absolute; top: 12px; left: 12px;
+    border-radius: 50px; padding: 4px 12px;
+    font-size: .72rem; font-weight: 800; color: #fff;
+  }
+  .product-fav {
+    position: absolute; top: 10px; right: 12px;
+    font-size: 1.3rem; cursor: pointer; transition: transform .2s;
+    background: rgba(255,255,255,0.85); border-radius: 50%;
+    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    border: none;
+  }
+  .product-fav:hover { transform: scale(1.2); }
+  .product-body { padding: 18px 20px 20px; }
+  .product-category { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+  .product-name { font-weight: 800; font-size: 1rem; margin-bottom: 6px; line-height: 1.3; }
+  .product-desc { font-size: .82rem; color: var(--mid); line-height: 1.5; margin-bottom: 14px; }
+  .product-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .product-age { font-size: .75rem; background: #F0F0F0; border-radius: 50px; padding: 3px 10px; font-weight: 700; }
+  .product-pages { font-size: .75rem; color: var(--mid); }
+  .product-rating { font-size: .8rem; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-price {
+    font-family: 'Baloo 2', cursive; font-size: 1.25rem; font-weight: 800;
+  }
+  .product-old-price { font-size: .82rem; color: #aaa; text-decoration: line-through; margin-left: 4px; }
+  .add-cart {
+    background: var(--dark); color: #fff;
+    border: none; border-radius: 50px;
+    padding: 9px 18px; font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: .85rem; cursor: pointer;
+    transition: background .2s, transform .15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .add-cart:hover { background: var(--coral); transform: scale(1.04); }
+
+  /* BANNER */
+  .promo-banner {
+    margin: 0 5% 60px;
+    background: linear-gradient(135deg, var(--sky) 0%, var(--lavender) 100%);
+    border-radius: 28px; padding: 48px 6%;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 30px; flex-wrap: wrap; position: relative; overflow: hidden;
+  }
+  .promo-banner::before {
+    content: '🎒';
+    position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+    font-size: 7rem; opacity: .18;
+  }
+  .promo-banner h2 {
+    font-family: 'Baloo 2', cursive; font-size: 1.9rem;
+    font-weight: 800; color: #fff; margin-bottom: 8px;
+  }
+  .promo-banner p { color: rgba(255,255,255,.85); font-size: .95rem; max-width: 400px; }
+  .promo-code {
+    background: rgba(255,255,255,.2); border: 2px dashed rgba(255,255,255,.6);
+    border-radius: 12px; padding: 10px 20px; color: #fff;
+    font-weight: 800; font-size: 1.1rem; letter-spacing: .1em;
+    margin-top: 14px; display: inline-block;
+  }
+  .promo-right { text-align: right; }
+  .promo-disc {
+    font-family: 'Baloo 2', cursive; font-size: 4rem; font-weight: 800;
+    color: var(--sun); line-height: 1;
+  }
+  .promo-disc span { font-size: 1.5rem; }
+  .promo-right p { color: rgba(255,255,255,.85); font-size: .85rem; }
+
+  /* TESTIMONIALS */
+  .testimonials { padding: 60px 5%; background: #fff; }
+  .testi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .testi-card {
+    background: var(--cream); border-radius: 20px; padding: 24px;
+    border: 2px solid var(--light-border);
+  }
+  .testi-stars { font-size: 1.1rem; margin-bottom: 12px; }
+  .testi-text { font-size: .9rem; line-height: 1.65; color: var(--mid); margin-bottom: 16px; font-style: italic; }
+  .testi-author { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; font-weight: 800; color: #fff;
+  }
+  .testi-name { font-weight: 800; font-size: .9rem; }
+  .testi-role { font-size: .78rem; color: var(--mid); }
+
+  /* HOW IT WORKS */
+  .how { padding: 60px 5%; }
+  .how-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 40px; }
+  .how-step { text-align: center; }
+  .how-icon {
+    width: 80px; height: 80px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 16px;
+    border: 3px solid var(--dark);
+  }
+  .how-step h3 { font-weight: 800; margin-bottom: 8px; }
+  .how-step p { font-size: .88rem; color: var(--mid); line-height: 1.6; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); color: #fff;
+    padding: 50px 5% 30px;
+  }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; flex-wrap: wrap; }
+  .footer-brand .logo { color: #fff; margin-bottom: 14px; display: inline-flex; }
+  .footer-brand p { font-size: .88rem; color: #aaa; line-height: 1.7; max-width: 260px; }
+  .footer-col h4 { font-weight: 800; margin-bottom: 16px; color: var(--sun); }
+  .footer-col a { display: block; color: #aaa; text-decoration: none; font-size: .88rem; margin-bottom: 10px; transition: color .2s; }
+  .footer-col a:hover { color: #fff; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.1);
+    padding-top: 24px; display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: gap; font-size: .82rem; color: #666;
+  }
+  .footer-badges { display: flex; gap: 10px; }
+  .footer-badge {
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
+    border-radius: 8px; padding: 6px 12px; font-size: .78rem; color: #aaa;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+    z-index: 500; display: flex; align-items: center; justify-content: center;
+    padding: 20px; opacity: 0; pointer-events: none; transition: opacity .25s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: #fff; border-radius: 28px; max-width: 520px; width: 100%;
+    padding: 36px; position: relative; transform: scale(.9); transition: transform .25s;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .modal-overlay.open .modal { transform: scale(1); }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: #f0f0f0; border: none; border-radius: 50%;
+    width: 34px; height: 34px; font-size: 1.1rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-emoji { font-size: 3.5rem; margin-bottom: 12px; }
+  .modal-name { font-family: 'Baloo 2', cursive; font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; }
+  .modal-price-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .modal-price { font-family: 'Baloo 2', cursive; font-size: 1.8rem; font-weight: 800; color: var(--coral); }
+  .modal-old { font-size: .95rem; color: #aaa; text-decoration: line-through; }
+  .modal-desc { font-size: .92rem; color: var(--mid); line-height: 1.7; margin-bottom: 20px; }
+  .modal-features { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .modal-feat {
+    background: var(--cream); border: 1.5px solid var(--light-border);
+    border-radius: 8px; padding: 6px 12px; font-size: .8rem; font-weight: 700;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .modal-buy {
+    background: var(--coral); color: #fff;
+    border: none; border-radius: 50px; width: 100%;
+    padding: 15px; font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 1rem; cursor: pointer;
+    box-shadow: 0 6px 0 #c94c4c; transition: transform .15s, box-shadow .15s;
+  }
+  .modal-buy:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #c94c4c; }
+
+  /* CART DRAWER */
+  .cart-drawer {
+    position: fixed; top: 0; right: -400px; width: 380px; height: 100vh;
+    background: #fff; z-index: 600; box-shadow: -8px 0 40px rgba(0,0,0,0.15);
+    display: flex; flex-direction: column; transition: right .3s cubic-bezier(.25,.8,.25,1);
+  }
+  .cart-drawer.open { right: 0; }
+  .cart-head {
+    padding: 24px 24px 16px;
+    border-bottom: 2px solid var(--light-border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .cart-head h3 { font-family: 'Baloo 2', cursive; font-size: 1.3rem; font-weight: 800; }
+  .cart-close {
+    background: #f0f0f0; border: none; border-radius: 50%;
+    width: 34px; height: 34px; cursor: pointer; font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cart-items { flex: 1; overflow-y: auto; padding: 16px 24px; }
+  .cart-empty { text-align: center; padding: 40px 0; color: var(--mid); }
+  .cart-empty-icon { font-size: 3rem; margin-bottom: 12px; }
+  .cart-item {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 16px 0; border-bottom: 1.5px solid var(--light-border);
+  }
+  .cart-item-thumb {
+    width: 56px; height: 56px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem; flex-shrink: 0;
+  }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-weight: 800; font-size: .9rem; margin-bottom: 4px; }
+  .cart-item-price { color: var(--coral); font-weight: 800; font-size: .9rem; }
+  .cart-item-remove { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1rem; transition: color .2s; }
+  .cart-item-remove:hover { color: var(--coral); }
+  .cart-foot { padding: 20px 24px; border-top: 2px solid var(--light-border); }
+  .cart-total { display: flex; justify-content: space-between; font-weight: 800; font-size: 1.1rem; margin-bottom: 16px; }
+  .cart-checkout {
+    background: var(--coral); color: #fff;
+    border: none; border-radius: 50px; width: 100%;
+    padding: 14px; font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 1rem; cursor: pointer;
+    box-shadow: 0 5px 0 #c94c4c; transition: transform .15s, box-shadow .15s;
+  }
+  .cart-checkout:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #c94c4c; }
+  .cart-note { font-size: .78rem; color: var(--mid); text-align: center; margin-top: 10px; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--dark); color: #fff; border-radius: 50px;
+    padding: 12px 24px; font-weight: 700; font-size: .9rem;
+    z-index: 700; transition: transform .3s; display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; text-align: center; }
+    .hero p { margin: 0 auto; }
+    .hero-btns { justify-content: center; }
+    .hero-visual { margin-top: 30px; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .stats { gap: 30px; }
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+    .cart-drawer { width: 100%; right: -100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#"><span class="logo-icon">📚</span> Kiddo<span>Sheet</span></a>
+  <div class="nav-links">
+    <a href="#categories">Kategori</a>
+    <a href="#produk">Produk</a>
+    <a href="#cara">Cara Beli</a>
+    <a href="#testimoni">Review</a>
+  </div>
+  <button class="cart-btn" onclick="toggleCart()">
+    🛒 Keranjang
+    <span class="cart-count" id="cartCount">0</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-tag">✨ Belajar Jadi Menyenangkan!</span>
+    <h1>Worksheet <em>Seru & Kreatif</em> untuk Anak Usia Dini</h1>
+    <p>Ratusan lembar kerja digital berkualitas tinggi — langsung download, langsung print! Dirancang psikolog anak untuk mendukung tumbuh kembang si kecil.</p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="#produk">🛍️ Belanja Sekarang</a>
+      <a class="btn-secondary" href="#cara">Cara Pembelian</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card" style="border-color:#FFD93D20; background:linear-gradient(135deg,#FFF9E6,#fff)">
+      <span class="hero-card-emoji">🔢</span>
+      <span class="hero-card-title">Worksheet Angka</span>
+      <span class="hero-card-sub">Usia 3–5 tahun</span>
+      <span class="hero-card-badge" style="background:var(--peach)">Bestseller 🔥</span>
+    </div>
+    <div class="hero-card" style="border-color:#FF6B6B20; background:linear-gradient(135deg,#FFF0F0,#fff)">
+      <span class="hero-card-emoji">🔤</span>
+      <span class="hero-card-title">Worksheet Huruf</span>
+      <span class="hero-card-sub">Usia 4–6 tahun</span>
+      <span class="hero-card-badge" style="background:var(--coral)">Baru ✨</span>
+    </div>
+    <div class="hero-card" style="border-color:#6BCB7720; background:linear-gradient(135deg,#F0FFF2,#fff)">
+      <span class="hero-card-emoji">🎨</span>
+      <span class="hero-card-title">Mewarnai Kreatif</span>
+      <span class="hero-card-sub">Semua usia</span>
+      <span class="hero-card-badge" style="background:var(--mint)">Favorit 💚</span>
+    </div>
+    <div class="hero-card" style="border-color:#4D96FF20; background:linear-gradient(135deg,#F0F5FF,#fff)">
+      <span class="hero-card-emoji">🧩</span>
+      <span class="hero-card-title">Puzzle & Logika</span>
+      <span class="hero-card-sub">Usia 5–7 tahun</span>
+      <span class="hero-card-badge" style="background:var(--sky)">Top Rated ⭐</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-num">12.000+</div><div class="stat-label">Pelanggan Puas</div></div>
+  <div class="stat"><div class="stat-num">300+</div><div class="stat-label">Produk Worksheet</div></div>
+  <div class="stat"><div class="stat-num">4.9⭐</div><div class="stat-label">Rating Rata-rata</div></div>
+  <div class="stat"><div class="stat-num">Instan</div><div class="stat-label">Download Setelah Bayar</div></div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="section" id="categories">
+  <div class="section-header">
+    <div class="section-tag">📂 Jelajahi</div>
+    <h2>Pilih Kategori Favoritmu</h2>
+  </div>
+  <div class="category-grid">
+    <a class="cat-card active" href="#" onclick="filterCat('semua',this)">
+      <span class="cat-emoji">🌈</span>
+      <span class="cat-name">Semua</span>
+      <span class="cat-count">48 produk</span>
+    </a>
+    <a class="cat-card" href="#" onclick="filterCat('angka',this)">
+      <span class="cat-emoji">🔢</span>
+      <span class="cat-name">Angka & Matematika</span>
+      <span class="cat-count">12 produk</span>
+    </a>
+    <a class="cat-card" href="#" onclick="filterCat('huruf',this)">
+      <span class="cat-emoji">🔤</span>
+      <span class="cat-name">Huruf & Bahasa</span>
+      <span class="cat-count">10 produk</span>
+    </a>
+    <a class="cat-card" href="#" onclick="filterCat('seni',this)">
+      <span class="cat-emoji">🎨</span>
+      <span class="cat-name">Seni & Mewarnai</span>
+      <span class="cat-count">9 produk</span>
+    </a>
+    <a class="cat-card" href="#" onclick="filterCat('sains',this)">
+      <span class="cat-emoji">🔬</span>
+      <span class="cat-name">Sains & Alam</span>
+      <span class="cat-count">7 produk</span>
+    </a>
+    <a class="cat-card" href="#" onclick="filterCat('sosem',this)">
+      <span class="cat-emoji">💛</span>
+      <span class="cat-name">Sosial & Emosi</span>
+      <span class="cat-count">6 produk</span>
+    </a>
+    <a class="cat-card" href="#" onclick="filterCat('motorik',this)">
+      <span class="cat-emoji">✂️</span>
+      <span class="cat-name">Motorik Halus</span>
+      <span class="cat-count">4 produk</span>
+    </a>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="produk">
+  <div class="products-header">
+    <h2>Produk Unggulan</h2>
+    <div class="filter-row">
+      <button class="filter-pill active" onclick="setFilter('semua',this)">Semua</button>
+      <button class="filter-pill" onclick="setFilter('terlaris',this)">🔥 Terlaris</button>
+      <button class="filter-pill" onclick="setFilter('terbaru',this)">✨ Terbaru</button>
+      <button class="filter-pill" onclick="setFilter('murah',this)">💰 Harga Terjangkau</button>
+    </div>
+  </div>
+  <div class="product-grid" id="productGrid"></div>
+</section>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  <div>
+    <h2>🎉 Diskon Spesial untuk Member Baru!</h2>
+    <p>Daftar sekarang dan dapatkan diskon 20% untuk pembelian pertamamu. Paket bundel lebih hemat hingga 40%!</p>
+    <div class="promo-code">KIDDO20</div>
+  </div>
+  <div class="promo-right">
+    <div class="promo-disc"><span>up to</span><br>40%<span> OFF</span></div>
+    <p>untuk paket bundel</p>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="cara">
+  <div class="section-header">
+    <div class="section-tag">🛒 Cara Beli</div>
+    <h2>Mudah & Cepat Hanya 3 Langkah!</h2>
+  </div>
+  <div class="how-steps">
+    <div class="how-step">
+      <div class="how-icon" style="background:#FFF4CC; border-color:var(--sun)">🔍</div>
+      <h3>1. Pilih Produk</h3>
+      <p>Jelajahi ratusan worksheet dan pilih yang sesuai dengan usia & kebutuhan si kecil.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-icon" style="background:#FFE8E8; border-color:var(--coral)">💳</div>
+      <h3>2. Bayar Mudah</h3>
+      <p>Bayar via transfer bank, GoPay, OVO, Dana, QRIS, atau kartu kredit. Aman & terpercaya!</p>
+    </div>
+    <div class="how-step">
+      <div class="how-icon" style="background:#E8FFF0; border-color:var(--mint)">⚡</div>
+      <h3>3. Download Instan</h3>
+      <p>Link download langsung masuk ke emailmu. Print di rumah, langsung pakai!</p>
+    </div>
+    <div class="how-step">
+      <div class="how-icon" style="background:#E8F0FF; border-color:var(--sky)">🖨️</div>
+      <h3>4. Print & Main!</h3>
+      <p>Cetak dan belajar bersama si kecil. Bisa dicetak ulang berkali-kali!</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimoni">
+  <div class="section-header">
+    <div class="section-tag">💬 Testimoni</div>
+    <h2>Kata Mama & Papa yang Sudah Beli</h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <p class="testi-text">"Anakku yang 4 tahun langsung antusias banget! Gambar-gambarnya lucu dan warnanya cerah. Langsung print 3 set sekaligus hehe"</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:var(--coral)">A</div>
+        <div><div class="testi-name">Mama Arini</div><div class="testi-role">Jakarta · Ibu dari Zara (4 thn)</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <p class="testi-text">"Harga sangat terjangkau tapi kualitasnya premium banget. Beli paket bundel hemat 40%, langsung download, besoknya sudah bisa dipakai!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:var(--sky)">R</div>
+        <div><div class="testi-name">Bunda Rina</div><div class="testi-role">Surabaya · Guru TK</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <p class="testi-text">"Sudah beli 5 kali! CS responsif banget, file langsung masuk email. Anakku sekarang malah minta worksheet terus, alhamdulillah senang belajar!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:var(--mint)">D</div>
+        <div><div class="testi-name">Papa Dito</div><div class="testi-role">Bandung · Ayah dari Kenzie (5 thn)</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <p class="testi-text">"Didesain berdasarkan ilmu perkembangan anak, beda banget dengan yang ada di toko biasa. Terima kasih Kiddosheet, rumahku jadi lebih berwarna!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:var(--lavender)">S</div>
+        <div><div class="testi-name">Bunda Sari</div><div class="testi-role">Yogyakarta · Psikolog Anak</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="logo" href="#">📚 Kiddo<span>Sheet</span></a>
+      <p>Toko worksheet digital terpercaya untuk tumbuh kembang anak usia dini. Dibuat dengan cinta oleh para pendidik dan desainer profesional.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Produk</h4>
+      <a href="#">Worksheet Angka</a>
+      <a href="#">Worksheet Huruf</a>
+      <a href="#">Mewarnai</a>
+      <a href="#">Puzzle Logika</a>
+      <a href="#">Paket Bundel</a>
+    </div>
+    <div class="footer-col">
+      <h4>Bantuan</h4>
+      <a href="#">Cara Pembelian</a>
+      <a href="#">FAQ</a>
+      <a href="#">Kebijakan Refund</a>
+      <a href="#">Hubungi Kami</a>
+      <a href="#">WhatsApp CS</a>
+    </div>
+    <div class="footer-col">
+      <h4>Ikuti Kami</h4>
+      <a href="#">📸 Instagram</a>
+      <a href="#">📌 Pinterest</a>
+      <a href="#">🎵 TikTok</a>
+      <a href="#">👥 Facebook Group</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 KiddoSheet. Dibuat dengan ❤️ untuk anak Indonesia.</p>
+    <div class="footer-badges">
+      <div class="footer-badge">🔒 Pembayaran Aman</div>
+      <div class="footer-badge">⚡ Download Instan</div>
+      <div class="footer-badge">🖨️ Print Unlimited</div>
+    </div>
+  </div>
+</footer>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3>🛒 Keranjang Belanja</h3>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot">
+    <div class="cart-total">
+      <span>Total:</span>
+      <span id="cartTotal">Rp 0</span>
+    </div>
+    <button class="cart-checkout" onclick="checkout()">Bayar Sekarang 💳</button>
+    <p class="cart-note">🔒 Pembayaran aman & terenkripsi · Download instan setelah bayar</p>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const products = [
+  { id:1, name:"Worksheet Angka 1-20 dengan Gambar", emoji:"🔢", category:"angka", tag:"terlaris", color:"#FFF9CC", badge:"Bestseller 🔥", badgeColor:"#FFB347", price:25000, oldPrice:40000, age:"3-5 thn", pages:"30 hal", rating:"4.9 (847)", desc:"Belajar angka 1-20 dengan ilustrasi lucu dan aktivitas menarik. Cocok untuk anak pra-TK dan TK A.", features:["PDF HD siap print","30 halaman aktivitas","Ilustrasi penuh warna","Panduan orang tua"] },
+  { id:2, name:"Menulis Huruf Alfabet A-Z", emoji:"✏️", category:"huruf", tag:"terlaris", color:"#FFE8E8", badge:"Paling Disukai ❤️", badgeColor:"#FF6B6B", price:22000, oldPrice:35000, age:"4-6 thn", pages:"28 hal", rating:"4.8 (621)", desc:"Latihan menulis huruf kapital dan kecil dengan panduan garis putus-putus. Melatih motorik halus.", features:["Huruf A-Z lengkap","Garis panduan putus","Ruang latihan luas","Tips menulis"] },
+  { id:3, name:"Buku Mewarnai Hewan Lucu", emoji:"🦁", category:"seni", tag:"terlaris", color:"#E8FFE8", badge:"Favorit 💚", badgeColor:"#6BCB77", price:18000, oldPrice:28000, age:"2-7 thn", pages:"25 hal", rating:"5.0 (1.2k)", desc:"25 gambar hewan menggemaskan siap diwarnai. Melatih kreativitas dan motorik halus si kecil.", features:["25 gambar HD","Garis tegas mudah diwarnai","Berbagai hewan lucu","Bisa print berulang"] },
+  { id:4, name:"Puzzle Pola & Bentuk Geometri", emoji:"🔷", category:"motorik", tag:"terbaru", color:"#E8F0FF", badge:"Baru ✨", badgeColor:"#4D96FF", price:28000, oldPrice:45000, age:"4-6 thn", pages:"20 hal", rating:"4.7 (312)", desc:"Aktivitas mencocokkan bentuk, menelusuri pola, dan menghubungkan titik untuk melatih logika.", features:["Bentuk 2D & 3D","Latihan pola","Hubungkan titik","Level kesulitan bertahap"] },
+  { id:5, name:"Worksheet Sains: Mengenal Tanaman", emoji:"🌱", category:"sains", tag:"terbaru", color:"#F0FFE8", badge:"Edukatif 🌿", badgeColor:"#52C97A", price:20000, oldPrice:32000, age:"4-7 thn", pages:"22 hal", rating:"4.8 (198)", desc:"Belajar bagian-bagian tanaman, cara merawat, dan eksperimen sederhana yang bisa dilakukan di rumah.", features:["Infografis tanaman","Eksperimen mudah","Kosakata baru","Halaman jurnal"] },
+  { id:6, name:"Emosi & Perasaanku (SEL)", emoji:"💛", category:"sosem", tag:"terlaris", color:"#FFFCE8", badge:"Direkomendasikan 🌟", badgeColor:"#C77DFF", price:30000, oldPrice:48000, age:"3-6 thn", pages:"32 hal", rating:"4.9 (445)", desc:"Worksheet sosial-emosional untuk mengenal dan mengelola emosi. Dipandu psikolog anak berpengalaman.", features:["32 aktivitas SEL","Kartu emosi","Latihan mindfulness","Untuk ortu & anak"] },
+  { id:7, name:"Berhitung Tambah & Kurang", emoji:"➕", category:"angka", tag:"terlaris", color:"#FFF4E8", badge:"Top Rated ⭐", badgeColor:"#FF9500", price:24000, oldPrice:38000, age:"5-7 thn", pages:"28 hal", rating:"4.9 (567)", desc:"Latihan penjumlahan dan pengurangan 1-20 dengan soal bergambar yang menyenangkan.", features:["Penjumlahan 1-20","Pengurangan 1-20","Soal bergambar","Lembar evaluasi"] },
+  { id:8, name:"Gunting Tempel Kreatif", emoji:"✂️", category:"motorik", tag:"terbaru", color:"#FFE8FF", badge:"Seru! 🎉", badgeColor:"#C77DFF", price:16000, oldPrice:25000, age:"3-5 thn", pages:"18 hal", rating:"4.7 (276)", desc:"Aktivitas gunting dan tempel untuk melatih motorik halus dan koordinasi mata-tangan si kecil.", features:["18 aktivitas kreatif","Pola mudah dipotong","Proyek seni mini","Aman & menyenangkan"] },
+];
+
+let cart = [];
+let activeFilter = 'semua';
+
+function renderProducts(filter='semua') {
+  const grid = document.getElementById('productGrid');
+  const filtered = filter === 'semua' ? products
+    : filter === 'murah' ? [...products].sort((a,b) => a.price - b.price)
+    : products.filter(p => p.tag === filter);
+
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card" onclick="openModal(${p.id})">
+      <div class="product-thumb" style="background:${p.color}">
+        <span>${p.emoji}</span>
+        <span class="product-badge" style="background:${p.badgeColor}">${p.badge}</span>
+        <button class="product-fav" onclick="event.stopPropagation(); toggleFav(this)">🤍</button>
+      </div>
+      <div class="product-body">
+        <div class="product-category" style="color:${p.badgeColor}">${getCatLabel(p.category)}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc.slice(0,80)}...</div>
+        <div class="product-meta">
+          <span class="product-age">👶 ${p.age}</span>
+          <span class="product-pages">📄 ${p.pages}</span>
+          <span class="product-rating">⭐ ${p.rating}</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <span class="product-price" style="color:var(--coral)">Rp ${p.price.toLocaleString('id')}</span>
+            <span class="product-old-price">Rp ${p.oldPrice.toLocaleString('id')}</span>
+          </div>
+          <button class="add-cart" onclick="event.stopPropagation(); addToCart(${p.id})">+ Keranjang</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function getCatLabel(cat) {
+  const map = {angka:'🔢 Angka & Matematika',huruf:'🔤 Huruf & Bahasa',seni:'🎨 Seni',sains:'🔬 Sains',sosem:'💛 Sosial Emosi',motorik:'✂️ Motorik'};
+  return map[cat] || cat;
+}
+
+function filterCat(cat, el) {
+  document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  const filtered = cat === 'semua' ? products : products.filter(p => p.category === cat);
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card" onclick="openModal(${p.id})">
+      <div class="product-thumb" style="background:${p.color}">
+        <span>${p.emoji}</span>
+        <span class="product-badge" style="background:${p.badgeColor}">${p.badge}</span>
+        <button class="product-fav" onclick="event.stopPropagation(); toggleFav(this)">🤍</button>
+      </div>
+      <div class="product-body">
+        <div class="product-category" style="color:${p.badgeColor}">${getCatLabel(p.category)}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc.slice(0,80)}...</div>
+        <div class="product-meta">
+          <span class="product-age">👶 ${p.age}</span>
+          <span class="product-pages">📄 ${p.pages}</span>
+          <span class="product-rating">⭐ ${p.rating}</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <span class="product-price" style="color:var(--coral)">Rp ${p.price.toLocaleString('id')}</span>
+            <span class="product-old-price">Rp ${p.oldPrice.toLocaleString('id')}</span>
+          </div>
+          <button class="add-cart" onclick="event.stopPropagation(); addToCart(${p.id})">+ Keranjang</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  return false;
+}
+
+function setFilter(f, el) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  renderProducts(f);
+}
+
+function toggleFav(btn) {
+  btn.textContent = btn.textContent === '🤍' ? '❤️' : '🤍';
+}
+
+function openModal(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-emoji">${p.emoji}</div>
+    <div class="modal-name">${p.name}</div>
+    <div class="modal-price-row">
+      <span class="modal-price">Rp ${p.price.toLocaleString('id')}</span>
+      <span class="modal-old">Rp ${p.oldPrice.toLocaleString('id')}</span>
+    </div>
+    <div class="modal-desc">${p.desc}</div>
+    <div class="modal-features">
+      ${p.features.map(f => `<span class="modal-feat">✅ ${f}</span>`).join('')}
+      <span class="modal-feat">👶 Usia ${p.age}</span>
+      <span class="modal-feat">📄 ${p.pages}</span>
+      <span class="modal-feat">⭐ ${p.rating}</span>
+    </div>
+    <button class="modal-buy" onclick="addToCart(${p.id}); closeModalBtn()">🛒 Tambah ke Keranjang</button>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModalBtn();
+}
+function closeModalBtn() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function addToCart(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  const existing = cart.find(c => c.id === id);
+  if (!existing) cart.push({...p, qty:1});
+  updateCart();
+  showToast(`✅ "${p.name.slice(0,30)}..." ditambahkan!`);
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(c => c.id !== id);
+  updateCart();
+}
+
+function updateCart() {
+  document.getElementById('cartCount').textContent = cart.length;
+  const total = cart.reduce((s,c) => s + c.price, 0);
+  document.getElementById('cartTotal').textContent = 'Rp ' + total.toLocaleString('id');
+
+  const itemsEl = document.getElementById('cartItems');
+  if (!cart.length) {
+    itemsEl.innerHTML = `<div class="cart-empty"><div class="cart-empty-icon">🛒</div><p>Keranjang masih kosong.<br>Yuk pilih worksheet seru!</p></div>`;
+    return;
+  }
+  itemsEl.innerHTML = cart.map(c => `
+    <div class="cart-item">
+      <div class="cart-item-thumb" style="background:${c.color}">${c.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${c.name.slice(0,40)}...</div>
+        <div class="cart-item-price">Rp ${c.price.toLocaleString('id')}</div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart(${c.id})">✕</button>
+    </div>
+  `).join('');
+}
+
+function toggleCart() {
+  document.getElementById('cartDrawer').classList.toggle('open');
+}
+
+function checkout() {
+  if (!cart.length) { showToast('❗ Keranjang masih kosong!'); return; }
+  showToast('🎉 Menuju halaman pembayaran...');
+  setTimeout(() => toggleCart(), 1000);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+renderProducts();
+updateCart();
+</script>
+</body>
+</html>
